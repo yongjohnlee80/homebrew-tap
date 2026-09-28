@@ -23,7 +23,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Render the formula
-        run: sh scripts/update-formula.sh ${{ inputs.tag }}
+        env:
+          TAG: ${{ inputs.tag }}
+        run: sh scripts/update-formula.sh "$TAG"
 
       - name: Commit if it changed
         run: |
