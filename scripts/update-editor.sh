@@ -52,11 +52,11 @@ cask "autodoc-editor" do
   version "$version"
 
   on_arm do
-    url "$base/autodoc-editor-$tag-darwin-arm64.tar.gz"
+    url "https://github.com/yongjohnlee80/autodoc/releases/download/v#{version}/autodoc-editor-v#{version}-darwin-arm64.tar.gz"
     sha256 "$darwin_arm64"
   end
   on_intel do
-    url "$base/autodoc-editor-$tag-darwin-amd64.tar.gz"
+    url "https://github.com/yongjohnlee80/autodoc/releases/download/v#{version}/autodoc-editor-v#{version}-darwin-amd64.tar.gz"
     sha256 "$darwin_amd64"
   end
 

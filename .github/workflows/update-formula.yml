@@ -116,6 +116,9 @@ jobs:
             "/Applications/AutoDoc Editor.app/Contents/MacOS/autodoc-editor" --version
             brew audit --cask --strict --online yongjohnlee80/tap/autodoc-editor
           else
+            sudo apt-get update
+            sudo apt-get install -y libwayland-dev libx11-dev libx11-xcb-dev libxkbcommon-x11-dev \
+              libgles2-mesa-dev libegl1-mesa-dev libxcursor-dev libxfixes-dev
             brew install yongjohnlee80/tap/autodoc-editor
             brew test yongjohnlee80/tap/autodoc-editor
             brew audit --strict --online yongjohnlee80/tap/autodoc-editor

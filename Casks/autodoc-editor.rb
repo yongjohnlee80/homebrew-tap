@@ -6,11 +6,11 @@ cask "autodoc-editor" do
   version "0.1.35"
 
   on_arm do
-    url "https://github.com/yongjohnlee80/autodoc/releases/download/v0.1.35/autodoc-editor-v0.1.35-darwin-arm64.tar.gz"
+    url "https://github.com/yongjohnlee80/autodoc/releases/download/v#{version}/autodoc-editor-v#{version}-darwin-arm64.tar.gz"
     sha256 "8c1b8555d7975812eeeb5dc54717e196bae0f1e6d1805d61899f7fe9172b0d75"
   end
   on_intel do
-    url "https://github.com/yongjohnlee80/autodoc/releases/download/v0.1.35/autodoc-editor-v0.1.35-darwin-amd64.tar.gz"
+    url "https://github.com/yongjohnlee80/autodoc/releases/download/v#{version}/autodoc-editor-v#{version}-darwin-amd64.tar.gz"
     sha256 "b8ece067add8ccdb3cd6e9aa3d72934faab00bf7dff0427572e7dd4df2bbda36"
   end
 
