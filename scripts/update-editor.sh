@@ -92,7 +92,8 @@ class AutodocEditor < Formula
 
   def install
     bin.install "autodoc-editor"
-    inreplace "autodoc-editor.desktop", "Exec=autodoc-editor", "Exec=#{bin}/autodoc-editor"
+    inreplace "autodoc-editor.desktop", "Exec=autodoc-editor", "Exec=#{opt_bin}/autodoc-editor"
+    inreplace "autodoc-editor.desktop", "TryExec=autodoc-editor", "TryExec=#{opt_bin}/autodoc-editor"
     (share/"applications").install "autodoc-editor.desktop"
   end
 
