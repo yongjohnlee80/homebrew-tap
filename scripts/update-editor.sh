@@ -63,7 +63,7 @@ cask "autodoc-editor" do
   name "AutoDoc Editor"
   desc "Native Markdown editor and search UI for AutoDoc"
   homepage "https://github.com/yongjohnlee80/autodoc"
-  depends_on :macos
+  depends_on macos: :tahoe
 
   app "AutoDoc Editor.app"
   binary "#{appdir}/AutoDoc Editor.app/Contents/MacOS/autodoc-editor"
@@ -93,7 +93,6 @@ class AutodocEditor < Formula
   def install
     bin.install "autodoc-editor"
     inreplace "autodoc-editor.desktop", "Exec=autodoc-editor", "Exec=#{opt_bin}/autodoc-editor"
-    inreplace "autodoc-editor.desktop", "TryExec=autodoc-editor", "TryExec=#{opt_bin}/autodoc-editor"
     (share/"applications").install "autodoc-editor.desktop"
   end
 
@@ -106,6 +105,9 @@ class AutodocEditor < Formula
 
   test do
     assert_match "autodoc v#{version}", shell_output("#{bin}/autodoc-editor --version")
+    desktop = (share/"applications/autodoc-editor.desktop").read
+    assert_match "Exec=#{opt_bin}/autodoc-editor", desktop
+    assert_match "TryExec=#{opt_bin}/autodoc-editor", desktop
   end
 end
 RUBY

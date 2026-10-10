@@ -102,6 +102,8 @@ jobs:
         with:
           ref: main
       - name: Install and test the editor package when released
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
         run: |
           if [ ! -f Casks/autodoc-editor.rb ]; then
             echo "AutoDoc has not published editor packages yet"

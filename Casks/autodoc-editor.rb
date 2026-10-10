@@ -17,7 +17,7 @@ cask "autodoc-editor" do
   name "AutoDoc Editor"
   desc "Native Markdown editor and search UI for AutoDoc"
   homepage "https://github.com/yongjohnlee80/autodoc"
-  depends_on :macos
+  depends_on macos: :tahoe
 
   app "AutoDoc Editor.app"
   binary "#{appdir}/AutoDoc Editor.app/Contents/MacOS/autodoc-editor"
