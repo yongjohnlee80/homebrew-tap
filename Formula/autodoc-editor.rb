@@ -8,14 +8,9 @@ class AutodocEditor < Formula
   license "Apache-2.0"
   depends_on :linux
 
-  on_arm do
-    url "https://github.com/yongjohnlee80/autodoc/releases/download/v0.1.35/autodoc-editor-v0.1.35-linux-arm64.tar.gz"
-    sha256 "682d5d73eb1648a39b4851e862f83351a56c7bc224b1c04d72e1c3b0841cd172"
-  end
-  on_intel do
-    url "https://github.com/yongjohnlee80/autodoc/releases/download/v0.1.35/autodoc-editor-v0.1.35-linux-amd64.tar.gz"
-    sha256 "085685eaa5dde72c55ff9c0266af5b4aa6740eb5ddd75f9982e2aa5c306b3b3b"
-  end
+  arch = Hardware::CPU.arm? ? "arm64" : "amd64"
+  url "https://github.com/yongjohnlee80/autodoc/releases/download/v0.1.35/autodoc-editor-v0.1.35-linux-#{arch}.tar.gz"
+  sha256(Hardware::CPU.arm? ? "682d5d73eb1648a39b4851e862f83351a56c7bc224b1c04d72e1c3b0841cd172" : "085685eaa5dde72c55ff9c0266af5b4aa6740eb5ddd75f9982e2aa5c306b3b3b")
 
   def install
     bin.install "autodoc-editor"

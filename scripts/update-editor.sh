@@ -81,14 +81,9 @@ class AutodocEditor < Formula
   license "Apache-2.0"
   depends_on :linux
 
-  on_arm do
-    url "$base/autodoc-editor-$tag-linux-arm64.tar.gz"
-    sha256 "$linux_arm64"
-  end
-  on_intel do
-    url "$base/autodoc-editor-$tag-linux-amd64.tar.gz"
-    sha256 "$linux_amd64"
-  end
+  arch = Hardware::CPU.arm? ? "arm64" : "amd64"
+  url "$base/autodoc-editor-$tag-linux-#{arch}.tar.gz"
+  sha256(Hardware::CPU.arm? ? "$linux_arm64" : "$linux_amd64")
 
   def install
     bin.install "autodoc-editor"
