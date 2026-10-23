@@ -10,22 +10,22 @@ class Autodb < Formula
   on_macos do
     on_arm do
       url "https://github.com/yongjohnlee80/autodb/releases/download/v0.4.20/autodb-v0.4.20-darwin-arm64.tar.gz"
-      sha256 "d0ff0c0b5ec2f999a8b43f140b7d11b1c9d9eae73be638077ee140224cfd028c"
+      sha256 "3b655daa94ef59621ed8b537f319c3a279a20fce6787295d327c29b7064cda52"
     end
     on_intel do
       url "https://github.com/yongjohnlee80/autodb/releases/download/v0.4.20/autodb-v0.4.20-darwin-amd64.tar.gz"
-      sha256 "7b8ba6e0a1e53bea52b6288222115782042eb40bf0f84a8d55cb2570310af437"
+      sha256 "65d06a130f873767443d0e45dfdf5268e58b926e0598480c4516ed4c4e626e82"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/yongjohnlee80/autodb/releases/download/v0.4.20/autodb-v0.4.20-linux-arm64.tar.gz"
-      sha256 "62f29ec38295008541f1c6385bac92183e914f9fe2bd2946468476a68e5331e3"
+      sha256 "87452f0747b30cde35b62080cc293db8a23450759f102b7a31f4501418a4c166"
     end
     on_intel do
       url "https://github.com/yongjohnlee80/autodb/releases/download/v0.4.20/autodb-v0.4.20-linux-amd64.tar.gz"
-      sha256 "ebd83f745c2dc123c23c1e0181a02e4a60c339a1c5fd3b33832a85089c55cd63"
+      sha256 "f853207d292b7c639a729ececb6ad1fdaddcc4c669fd2ba32eee8a9059617f53"
     end
   end
 
