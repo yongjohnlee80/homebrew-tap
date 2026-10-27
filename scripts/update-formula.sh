@@ -33,6 +33,26 @@ case "$tag" in
 esac
 version="${tag#v}"
 
+# at_least is whether the tag's version is MAJOR.MINOR.PATCH ($1 $2 $3) or later.
+at_least() {
+  set -- "$1" "$2" "$3" $(printf '%s' "$version" \
+    | sed -n 's/^\([0-9][0-9]*\)\.\([0-9][0-9]*\)\.\([0-9][0-9]*\).*/\1 \2 \3/p')
+  [ "$#" -eq 6 ] || { echo "error: no MAJOR.MINOR.PATCH in '$tag'" >&2; exit 1; }
+  [ "$4" -ne "$1" ] && { [ "$4" -gt "$1" ]; return; }
+  [ "$5" -ne "$2" ] && { [ "$5" -gt "$2" ]; return; }
+  [ "$6" -ge "$3" ]
+}
+
+# linux_suffix names the Linux archive the formula installs: the terminal build,
+# which is static and needs nothing else. autodoc's is "-tui" from v0.3.4, when
+# its unsuffixed Linux archive became the GUI build (cgo, linked against the
+# window system's libraries); autodoc's older releases and autodb's are
+# unsuffixed. The archive's binary carries the same suffix.
+linux_suffix=""
+if [ "$name" = autodoc ] && at_least 0 3 4; then
+  linux_suffix="-tui"
+fi
+
 sha() {
   asset="$name-$tag-$1.tar.gz"
   line="$(curl -fsSL "https://github.com/$REPO/releases/download/$tag/$asset.sha256")"
@@ -47,8 +67,22 @@ sha() {
 
 darwin_arm64="$(sha darwin-arm64)"
 darwin_amd64="$(sha darwin-amd64)"
-linux_arm64="$(sha linux-arm64)"
-linux_amd64="$(sha linux-amd64)"
+linux_arm64="$(sha "linux-arm64$linux_suffix")"
+linux_amd64="$(sha "linux-amd64$linux_suffix")"
+
+# The install step: the archive's binary, named as the archive is. Unchanged for an
+# unsuffixed Linux archive, so autodb's and older autodoc's formulae render as before.
+install='    os = OS.mac? ? "darwin" : "linux"
+    arch = Hardware::CPU.arm? ? "arm64" : "amd64"
+'
+if [ -n "$linux_suffix" ]; then
+  install="$install"'    suffix = OS.mac? ? "" : "'"$linux_suffix"'"
+    bin.install "'"$name"'-v#{version}-#{os}-#{arch}#{suffix}" => "'"$name"'"
+'
+else
+  install="$install"'    bin.install "'"$name"'-v#{version}-#{os}-#{arch}" => "'"$name"'"
+'
+fi
 
 cat > "Formula/$name.rb" <<RUBY
 # typed: false
@@ -73,20 +107,17 @@ class $class < Formula
 
   on_linux do
     on_arm do
-      url "https://github.com/$REPO/releases/download/$tag/$name-$tag-linux-arm64.tar.gz"
+      url "https://github.com/$REPO/releases/download/$tag/$name-$tag-linux-arm64$linux_suffix.tar.gz"
       sha256 "$linux_arm64"
     end
     on_intel do
-      url "https://github.com/$REPO/releases/download/$tag/$name-$tag-linux-amd64.tar.gz"
+      url "https://github.com/$REPO/releases/download/$tag/$name-$tag-linux-amd64$linux_suffix.tar.gz"
       sha256 "$linux_amd64"
     end
   end
 
   def install
-    os = OS.mac? ? "darwin" : "linux"
-    arch = Hardware::CPU.arm? ? "arm64" : "amd64"
-    bin.install "$name-v#{version}-#{os}-#{arch}" => "$name"
-  end
+$install  end
 
   test do
     assert_match "$name v#{version}", shell_output("#{bin}/$name --version")

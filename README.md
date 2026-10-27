@@ -14,7 +14,9 @@ brew install yongjohnlee80/tap/autodoc
 
 Works on macOS and Linux, on Apple silicon, Intel and ARM64. Each formula
 installs the release binaries and pins each one to the SHA-256 the release
-published.
+published. On Linux, autodoc's formula installs the static terminal build: from
+v0.3.4 that is the `-tui` archive, because autodoc's unsuffixed Linux archive is
+now the GUI build, which needs the window system's libraries.
 
 ## How they stay current
 
